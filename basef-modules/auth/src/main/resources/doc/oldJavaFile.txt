@@ -1,0 +1,110 @@
+package cn.ff.auth.config;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import javax.sql.DataSource;
+import sun.security.util.SecurityConstants;
+
+import java.util.Arrays;
+
+@Configuration
+@EnableAuthorizationServer
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserDetailsService userDetailServiceImpl;
+
+    /**
+     * 配置客户端详情信息
+     */
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // 存到内存中
+        clients.inMemory().withClient("c").secret("cool").authorizedGrantTypes("authorization_code", "refresh_token", "password").scopes("app");
+
+        /* 存到sql中 自定义
+        JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        clientDetailsService.setSelectClientDetailsSql("select client_id, client_secret from sys_oauth_client_details where client_id = ?");
+        clientDetailsService.setFindClientDetailsSql("select client_id, client_secret from sys_oauth_client_details order by client_id");
+        clients.withClientDetails(clientDetailsService);
+        存到sql中 默认
+        clients.withClientDetails(new JdbcClientDetailsService(dataSource));
+        */
+
+    }
+
+    /**
+     * 配置令牌
+     */
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints)throws Exception {
+
+        endpoints.authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter());
+        // 配置JwtAccessToken转换器           refresh_token需要userDetailsService
+        //endpoints.authenticationManager(authenticationManager).accessTokenConverter(jwtAccessTokenConverter()).reuseRefreshTokens(true).userDetailsService(userDetailService);
+
+
+
+    }
+
+
+
+
+    /*@Bean
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter tokenEnhancerChain = new JwtAccessTokenConverter();
+        tokenEnhancerChain.setAccessTokenConverter(jwtAccessTokenConverter());
+        return tokenEnhancerChain;
+    }*/
+
+    /**
+     * 对Token进行签名
+     */
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        //JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessToken();
+        DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();
+        defaultUserAuthenticationConverter.setUserDetailsService(userDetailServiceImpl);
+        DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+        jwtAccessTokenConverter.setAccessTokenConverter(defaultAccessTokenConverter);
+        jwtAccessTokenConverter.setSigningKey("i_cool_secret");
+        return jwtAccessTokenConverter;
+    }
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer)throws Exception {
+
+        oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")/*.allowFormAuthenticationForClients()*/;
+
+    }
+
+
+
+}

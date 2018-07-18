@@ -1,0 +1,39 @@
+
+
+spring:
+    application:
+        name: basef-config
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/isscy/cloud_config
+                    search-paths: basef
+                    default-label: master
+        bus:
+          trace:
+            enabled: true
+    rabbitmq:
+        host: 39.107.123.121
+        port: 5672
+        username: guest
+        password: '{cipher}4892fcebdfcad95050aa62844fb0bf58f9af8ce0ef0a7de703c7c21f4f81cd3a'
+server:
+    port: 9003
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9001/eureka/
+#management:
+#    security:
+#        enabled: false
+management:
+    endpoints:
+        web:
+            exposure:
+                include: bus-refresh
+encrypt:
+    key: ff@Auto.3g
+
+

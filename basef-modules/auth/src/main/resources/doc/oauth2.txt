@@ -1,0 +1,4 @@
+/oauth/token
+
+    ClientCredentialsTokenEndpointFilter.attemptAuthentication:
+    AbstractUserDetailsAuthenticationProvider.authenticate

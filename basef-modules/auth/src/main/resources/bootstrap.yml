@@ -1,0 +1,30 @@
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9001/eureka/
+server:
+    port: 9112
+spring:
+    application:
+        name: auth
+    profiles:
+        active: dev
+    cloud:
+        config:
+            fail-fast: true
+            discovery:
+                service-id: basef-config
+                enabled: true
+            profile: ${spring.profiles.active}
+            label: master
+#    zipkin:
+#        service:
+#            name: basef-zipkin
+    zipkin:
+          base-url: http://localhost:9004
+
+#security:
+#    oauth2:
+#        resource:
+#            filter-order: 3

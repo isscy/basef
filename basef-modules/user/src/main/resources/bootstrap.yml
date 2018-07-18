@@ -1,0 +1,68 @@
+#spring:
+#    application:
+#        name: user
+#    profiles:
+#        active: dev
+#    cloud:
+#        config:
+#            fail-fast: true
+#            discovery:
+#                service-id: pig-config-server
+#                enabled: true
+#            profile: ${spring.profiles.active}
+#            label: ${spring.profiles.active}
+#---
+#spring:
+#    profiles: dev
+#eureka:
+#    instance:
+#        prefer-ip-address: true
+#        lease-renewal-interval-in-seconds: 5
+#        lease-expiration-duration-in-seconds: 20
+#    client:
+#        serviceUrl:
+#            defaultZone: localhost:9001/eureka
+#        registry-fetch-interval-seconds: 10
+
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:9001/eureka/
+server:
+    port: 9111
+spring:
+    application:
+        name: user
+    profiles:
+        active: dev
+    cloud:
+        config:
+            fail-fast: true
+            discovery:
+                service-id: basef-config
+                enabled: true
+            profile: ${spring.profiles.active}
+            label: master
+    rabbitmq:
+            host: 39.107.123.121
+            port: 5672
+            username: guest
+            password: '{cipher}4892fcebdfcad95050aa62844fb0bf58f9af8ce0ef0a7de703c7c21f4f81cd3a'
+    zipkin:
+        base-url: http://localhost:9004
+#    zipkin:
+#        service:
+#            name: basef-zipkin
+#management:
+#    security:
+#        enabled: false
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: bus-refresh
+
+encrypt:
+    key: ff@Auto.3g
