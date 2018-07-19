@@ -10,7 +10,7 @@ public class PwdTest {
     @Test
     public void encode(){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode("android");
+        String password = passwordEncoder.encode("webApp");
         System.out.println(password);
 
 
