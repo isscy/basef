@@ -14,9 +14,8 @@ import java.util.Map;
 public class JwtAccessToken extends JwtAccessTokenConverter {
 
 
-    /**
-     * 生成token
-     */
+
+    /*//生成token
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken defaultOAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);
@@ -28,9 +27,7 @@ public class JwtAccessToken extends JwtAccessTokenConverter {
         return super.enhance(defaultOAuth2AccessToken, authentication);
     }
 
-    /**
-     * 解析token
-     */
+    //解析token
     @Override
     public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map){
         OAuth2AccessToken oauth2AccessToken = super.extractAccessToken(value, map);
@@ -50,6 +47,25 @@ public class JwtAccessToken extends JwtAccessTokenConverter {
         String json = gson.toJson(map);
         UserDetailsImpl user = gson.fromJson(json, UserDetailsImpl.class);
         return user;
+    }*/
+
+
+
+    @Override
+    public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
+        Map<String, Object> representation = (Map<String, Object>) super.convertAccessToken(token, authentication);
+        representation.put("version", "0.9");
+        return representation;
+    }
+
+    @Override
+    public OAuth2AccessToken extractAccessToken(String value, Map<String, ?> map) {
+        return super.extractAccessToken(value, map);
+    }
+
+    @Override
+    public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
+        return super.extractAuthentication(map);
     }
 
 
