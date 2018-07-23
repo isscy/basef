@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         anyRequest().authenticated()
                 .and()
                 .csrf().disable();
-        // @formatter:on
+
     }
 
     @Override

@@ -2,3 +2,10 @@
 
     ClientCredentialsTokenEndpointFilter.attemptAuthentication:
     AbstractUserDetailsAuthenticationProvider.authenticate
+
+携带token访问受限资源
+    OAuth2AuthenticationProcessingFilter.doFilter //OAuth2保护资源的预先认证过滤器。如果与OAuth2AuthenticationManager结合使用，则会从到来的请求之中提取一个OAuth2 token，之后使用OAuth2Authentication来填充Spring Security上下文。
+     ↓
+    BearerTokenExtractor
+    具体： https://blog.csdn.net/u013815546/article/details/77046453/
+

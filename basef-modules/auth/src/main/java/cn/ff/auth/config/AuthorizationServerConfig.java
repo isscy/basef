@@ -43,10 +43,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserDetailServiceImpl userDetailServiceImpl;
 
+    /* 如果不使用缓存就不要在这里配置这个bean, 这样的话就会使用默认的在内存中缓存token
     @Bean
     public RedisTokenStore tokenStore() {
         return new RedisTokenStore(connectionFactory);
-    }
+    }*/
 
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
