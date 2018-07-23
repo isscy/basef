@@ -76,6 +76,13 @@
             <version>2.8.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.ff</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <!--<scope>compile</scope>-->
+        </dependency>
+
     </dependencies>
 
 

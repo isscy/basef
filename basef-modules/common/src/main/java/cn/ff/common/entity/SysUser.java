@@ -1,4 +1,4 @@
-package cn.ff.auth.entity;
+package cn.ff.common.entity;
 
 import lombok.Data;
 
@@ -10,6 +10,7 @@ public class SysUser implements Serializable {
     private String username;
     private String password;
     private String status;
+    private String tel;
     private List<SysRole> roles;
     private String delFlag;
 }

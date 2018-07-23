@@ -1,13 +1,12 @@
 package cn.ff.auth.service.impl;
 
-import cn.ff.auth.constants.SecurityConstant;
-import cn.ff.auth.entity.SysRole;
-import cn.ff.auth.entity.SysUser;
+import cn.ff.common.constants.SecurityConstant;
+import cn.ff.common.entity.SysRole;
+import cn.ff.common.entity.SysUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import sun.security.util.SecurityConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;

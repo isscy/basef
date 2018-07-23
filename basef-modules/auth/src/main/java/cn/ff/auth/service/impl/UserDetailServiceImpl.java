@@ -1,9 +1,9 @@
 package cn.ff.auth.service.impl;
 
-import cn.ff.auth.constants.SecurityConstant;
-import cn.ff.auth.entity.SysRole;
-import cn.ff.auth.entity.SysUser;
-import cn.ff.auth.service.SysUserService;
+import cn.ff.auth.service.feign.UserFeign;
+import cn.ff.common.constants.SecurityConstant;
+import cn.ff.common.entity.SysRole;
+import cn.ff.common.entity.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,14 +14,17 @@ import java.util.List;
 
 @Service("userDetailServiceImpl")
 public class UserDetailServiceImpl implements UserDetailsService {
+    //    @Autowired
+//    private SysUserService sysUserService;
     @Autowired
-    private SysUserService sysUserService;
+    private UserFeign userFeign;
 
     @Override
     public UserDetailsImpl loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO
-        SysUser user = sysUserService.getByUsername(username);
-        if(user == null){
+
+        //SysUser user = sysUserService.getByUsername(username);
+        SysUser user = userFeign.findUserByUsername(username);
+        if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         List<SysRole> roles = new ArrayList<>();

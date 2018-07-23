@@ -1,4 +1,4 @@
-package cn.ff.auth.constants;
+package cn.ff.common.constants;
 
 public interface SecurityConstant {
 

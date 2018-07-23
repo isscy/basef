@@ -1,6 +1,6 @@
 package cn.ff.auth.controller;
 
-import cn.ff.auth.service.UserFeignService;
+import cn.ff.auth.service.feign.UserFeign;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +12,19 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("rest")
 public class RestfulController {
 
-    @Autowired
+    /*@Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private UserFeignService userFeignService;
+    private UserFeign userFeign;
 
     @GetMapping("call")
     @HystrixCommand(fallbackMethod = "callOgFallback")
     public String callOg(String id) {
         return restTemplate.getForObject("http://user/test/og/" + id,String.class);
     }
-    /**
-     * feign
-     */
-    @GetMapping("calls/{id}")
-    public String hiById(@PathVariable("id") String id){
-        return userFeignService.getOgById(id);
-    }
 
 
-    /**
-     * fallback
-     */
+
     public String callOgFallback(String id){
         return "调用User方法错误， 可能是崩了也可能是找不到  " + id ;
     }
@@ -41,5 +32,5 @@ public class RestfulController {
     public String getAuth(int num){
         return  "调用Auth结果： " + (233 + num);
 
-    }
+    }*/
 }

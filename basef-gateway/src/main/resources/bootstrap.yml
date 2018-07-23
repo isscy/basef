@@ -32,6 +32,13 @@ eureka:
         serviceUrl:
             defaultZone: http://localhost:9001/eureka/
         registry-fetch-interval-seconds: 10
+zuul:
+    host:
+        connect-timeout-millis: 990000
+        socket-timeout-millis: 990000
+
+    sensitive-headers:
+    add-host-header: true
 #
 #zuul:
 #    routes:

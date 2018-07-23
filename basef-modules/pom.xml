@@ -29,6 +29,7 @@
     <modules>
         <module>user</module>
         <module>auth</module>
+        <module>common</module>
     </modules>
 
 </project>
