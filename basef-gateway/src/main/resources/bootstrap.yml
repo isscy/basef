@@ -39,9 +39,15 @@ zuul:
 
     sensitive-headers:
     add-host-header: true
-#
-#zuul:
-#    routes:
-#        api-user:
-#            path: /user/**
-#            serviceId: user
+
+hyst
+
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        timeout:
+#          enabled: false    #设置熔断的超时时间开启 false关闭熔断功能，true开启熔断功能
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 90000
