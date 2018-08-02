@@ -36,11 +36,39 @@ zuul:
     host:
         connect-timeout-millis: 990000
         socket-timeout-millis: 990000
-
     sensitive-headers:
     add-host-header: true
 
-hyst
+
+management:
+    security:
+        enabled: false
+#认证服务器地址
+
+auth:
+    server: http://localhost:9112
+
+security:
+    basic:
+        enabled: false
+    encode:
+        key: '1234567887654321' #必须16位
+    validate:
+        code: false
+        preview: true
+    sessions: stateless
+    oauth2:
+        client:
+            client-id: web
+            client-secret: webApp
+        resource:
+#            jwt:
+#                key-uri: ${auth.server}/oauth/token_key #解析jwt令牌所需要密钥的地址
+            user-info-uri:  ${auth.server}/user
+            prefer-token-info: false
+
+
+# TODO 整理配置文件 把通用的放在 application-dev.yml 里
 
 #hystrix:
 #  command:
